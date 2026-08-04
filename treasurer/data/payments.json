@@ -1,0 +1,15 @@
+[
+    {
+        "id": "177892479573",
+        "residentId": 2,
+        "residentName": "Dela Cruz, Juan (2)",
+        "type": "Residency",
+        "orNo": "58585",
+        "amount": 50,
+        "ctcNo": "2325",
+        "ctcAmount": 100,
+        "bcNo": "",
+        "date": "2026-05-16",
+        "savedAt": "2026-05-16T09:46:35+00:00"
+    }
+]

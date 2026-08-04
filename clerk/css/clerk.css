@@ -1,0 +1,183 @@
+/*
+ * clerk/css/clerk.css
+ * Clerk-portal overrides on top of admin/css/main.css
+ */
+
+/* ── Sidebar user section layout fix ── */
+.sidebar-user {
+  padding: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: nowrap;
+}
+
+/* ── Modal margin override for clerk portal modals */
+.modal {
+  margin: 260px 0 20px 240px;
+}
+
+@media (max-width: 900px) {
+  .modal {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+/* ── Toast container ── */
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 340px;
+}
+
+/* ── Clerk role badge in sidebar ── */
+.user-avatar {
+  width: 34px;
+  height: 34px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.user-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.user-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-role {
+  font-size: 10.5px;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* ── Panel animation ── */
+.panel.active {
+  animation: panelIn 0.2s ease;
+}
+
+/* ── Restrict badge for clerk view-only notice ── */
+.clerk-readonly-notice {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(192, 57, 43, 0.10);
+  color: #c0392b;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(192, 57, 43, 0.20);
+}
+
+/* ── Bottom row dashboard fix ── */
+.bottom-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 22px;
+  align-items: stretch;
+}
+
+.bottom-row .stat-card {
+  flex: 1;
+}
+
+.bottom-row .cert-card {
+  flex: 1.2;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+}
+
+.bottom-row .cert-card:hover {
+  background: var(--slate);
+}
+
+.bottom-row .chart-card {
+  width: 340px;
+  flex-shrink: 0;
+}
+
+/* ── btn-gold alias (admin uses btn-gold, clerk modules use it too) ── */
+.btn-gold {
+  background: var(--gold);
+  color: #fff;
+}
+
+.btn-gold:hover {
+  background: #d35400;
+}
+
+/* ── btn-primary fallback ── */
+.btn-primary {
+  background: var(--navy);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--navy2);
+}
+
+/* ── btn-secondary ── */
+.btn-secondary {
+  background: var(--sky);
+  color: #fff;
+}
+
+.btn-secondary:hover {
+  background: #1a6fa0;
+}
+
+/* ── Sidebar overlay ── */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 190;
+}
+
+.sidebar-overlay.open {
+  display: block;
+}
+
+/* ── Print: hide clerk sidebar / topbar too ── */
+@media print {
+  .sidebar,
+  .topbar,
+  .sidebar-overlay,
+  .toast-container {
+    display: none !important;
+  }
+
+  .main {
+    margin-left: 0 !important;
+  }
+}

@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barangay Clearance Certificate</title>
+    <style>
+        @page {
+            size: 8.5in 11in;
+            margin: 0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background: #f5f5f5;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .certificate {
+            width: 8.5in;
+            height: 11in;
+            background: white;
+            padding: 0.75in 1in;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        /* Watermark */
+        .watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.08;
+            width: 400px;
+            height: 400px;
+            pointer-events: none;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            width: 110px;
+            height: 110px;
+            flex-shrink: 0;
+            object-fit: contain;
+            margin-top: -14px;
+            margin-bottom: -6px;
+        }
+
+        .header-text {
+            flex: 1;
+            text-align: center;
+            padding-top: 1px;
+            margin-right: 170px;
+            margin-bottom: -6px;
+        }
+
+        .header-text h1 {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 0;
+            line-height: 1.3;
+            margin-left: 28px;
+        }
+
+        .header-text h2 {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 2px 0;
+            letter-spacing: 0.5px;
+            text-align: justify;
+            width: 150%;
+        }
+
+        .header-text h3 {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 2px 0;
+            margin-left: 28px;
+        }
+
+        .header-text h4 {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0;
+            margin-left: 28px;
+        }
+
+        .clearance-number {
+            position: absolute;
+            right: 1.7in;
+            top: 1.9in;
+            color: #d32f2f;
+            font-size: 12px;
+        }
+
+        /* Title */
+        .title {
+            text-align: center;
+            margin: 40px 0 30px 0;
+        }
+
+        .title h1 {
+            font-size: 20px;
+            font-weight: bold;
+            text-decoration: underline;
+            letter-spacing: 3px;
+        }
+
+        /* Photo removed for Indigency certificates */
+
+        /* Content */
+        .content {
+            margin: 30px 0;
+            margin-right: 0.1in;
+            line-height: 1.8;
+            text-align: justify;
+
+        }
+
+        .salutation {
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .body-text {
+            font-size: 14px;
+            text-indent: 50px;
+
+        }
+
+        .body-text strong {
+            font-weight: bold;
+        }
+
+        .purpose {
+            font-size: 14px;
+            text-indent: 50px;
+            margin-top: 20px;
+        }
+
+        .issuance {
+            font-size: 14px;
+            text-indent: 50px;
+            margin-top: 20px;
+        }
+
+        .issuance sup {
+            font-size: 10px;
+            vertical-align: super;
+        }
+
+        /* Signature Section */
+        .signature-section {
+            margin-top: 230px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .signature-left {
+            text-align: center;
+            width: 45%;
+        }
+
+        .signature-right {
+            text-align: center;
+            width: 45%;
+        }
+
+        .signature-line {
+            border-top: 2px solid #000;
+            width: 100%;
+            margin-bottom: 5px;
+
+        }
+
+        .signature-label {
+            font-size: 12px;
+            font-style: italic;
+            color: #666;
+        }
+
+        .signature-name {
+            font-size: 14px;
+            font-weight: bold;
+            text-decoration: underline;
+            margin-top: 10px;
+        }
+
+        .signature-title {
+            font-size: 13px;
+            font-weight: bold;
+            margin-top: 2px;
+        }
+
+        /* Footer */
+        .footer {
+            position: absolute;
+            bottom: 0.75in;
+            left: 1in;
+            right: 1in;
+        }
+
+        .validity-note {
+            font-size: 11px;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .payment-details {
+            font-size: 10px;
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 11px;
+            margin-left: 140px;
+        }
+
+        .facebook-icon {
+            width: 35px;
+            height: 35px;
+            background: #1877f2;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .contact-text {
+            line-height: 1.4;
+        }
+
+        .contact-text a {
+            color: #1877f2;
+            text-decoration: none;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .certificate {
+                box-shadow: none;
+                margin: 0;
+            }
+        }
+
+        .hotline {
+            margin-left: 70px;
+            margin-bottom: -15px;
+        }
+
+        .email {
+            margin-left: 30px;
+            margin-bottom: -15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="certificate">
+        <!-- Watermark -->
+        <img class="watermark" src="../assets/logo_centtral.jpeg" alt="Watermark">
+
+        <!-- Header -->
+        <div class="header">
+            <img class="logo" src="../assets/logo_centtral.jpeg" alt="Central Barangay Logo">
+            <div class="header-text">
+                <h1>Republic of the Philippines</h1>
+                <h2>OFFICE OF THE BARANGAY COUNCIL</h2>
+                <h3>CENTRAL BARANGAY</h3>
+                <h4>DIPOLOG CITY</h4>
+            </div>
+        </div>
+
+        <!-- Clearance Number -->
+        <div class="clearance-number">No. <span id="certNo">0024</span></div>
+
+        <!-- Title -->
+        <div class="title">
+            <h1>BARANGAY CLEARANCE</h1>
+        </div>
+
+        <!-- Photo removed -->
+
+        <!-- Content -->
+        <div class="content">
+            <p class="salutation">TO WHOM IT MAY CONCERN:</p>
+
+            <p class="body-text">
+                THIS IS TO CERTIFY that <strong><span id="certResidentName">RESIDENT NAME</span></strong><span
+                    id="certResidentExtra">, </span>,
+                is a bona fide resident of <span id="certAddress">Echavez Street</span>,
+                Central Barangay, Dipolog City.
+            </p>
+
+            <p class="purpose">
+                This clearance is issued to certify that the above-mentioned individual has no derogatory or criminal
+                record filed in this Barangay.
+            </p>
+
+            <p class="purpose">
+                This clearance is issued to <span id="certPurpose">bank requirement</span>.
+            </p>
+
+            <p class="issuance">
+                Issued this <span id="certDay">9<sup>th</sup></span> day of
+                <span id="certMonth">February, 2026</span> at Central Barangay Hall, Dipolog City.
+            </p>
+        </div>
+
+        <!-- Signature Section -->
+        <div class="signature-section">
+            <div class="signature-left">
+                <div class="signature-line"></div>
+                <p class="signature-label">Signature of Applicant</p>
+            </div>
+
+            <div class="signature-right">
+                <p class="signature-name"><span id="certSignatory">ROSANNA D. DIAZ</span></p>
+                <p class="signature-title">PUNONG BARANGAY</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p class="validity-note">NOT VALID WITHOUT SEAL</p>
+
+            <div class="payment-details">
+                <div>Amount: <span id="certAmount">Php50.00</span></div>
+                <div>O.R No.: <span id="certORNo">3192404</span></div>
+                <div>BC No.: <span id="certBCNo">074-2026</span></div>
+                <div>CTC No.: <span id="certCTCNo">01643046</span></div>
+                <div>Date: <span id="certDate">02/09/2026</span></div>
+            </div>
+
+            <div class="contact-info">
+                <div class="facebook-icon">f</div>
+                <div class="contact-text">
+                    <div class="hotline">Hotline: (065) 212-3458</div><br>
+                    <div class="email">Email us at <a
+                            href="mailto:centralbrgy7100@gmail.com">centralbrgy7100@gmail.com</a></div><br>
+                    <a href="https://www.facebook.com/CentralBarangayDipologCity"
+                        target="_blank">https://www.facebook.com/CentralBarangayDipologCity</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get certificate data from URL parameters
+        const params = new URLSearchParams(window.location.search);
+
+        // Populate certificate fields
+        if (params.get('certNo')) document.getElementById('certNo').textContent = params.get('certNo');
+        // Set resident name (bold) and extra/civil (non-bold) separately
+        if (params.get('resident')) {
+            const name = params.get('resident') || '';
+            const el = document.getElementById('certResidentName');
+            if (el) el.textContent = name;
+        }
+        if (params.get('civil')) {
+            const civil = params.get('civil') || '';
+            const elExtra = document.getElementById('certResidentExtra');
+            if (elExtra) elExtra.textContent = ', ' + civil;
+        } else {
+            const elExtra = document.getElementById('certResidentExtra');
+            if (elExtra) elExtra.textContent = '';
+        }
+        if (params.get('address')) document.getElementById('certAddress').textContent = params.get('address');
+        if (params.get('gender')) {
+            const el = document.getElementById('certGender'); if (el) el.textContent = params.get('gender');
+        }
+        // Purpose should reflect the preview 'This clearance is issued to (input)'
+        if (params.get('purpose')) document.getElementById('certPurpose').textContent = params.get('purpose');
+        // Issued day may contain HTML (sup for ordinal), set as innerHTML
+        if (params.get('day')) document.getElementById('certDay').innerHTML = params.get('day');
+        if (params.get('month')) document.getElementById('certMonth').textContent = params.get('month');
+        if (params.get('signatory')) document.getElementById('certSignatory').textContent = params.get('signatory');
+        if (params.get('amount')) document.getElementById('certAmount').textContent = params.get('amount');
+        if (params.get('orNo')) document.getElementById('certORNo').textContent = params.get('orNo');
+        if (params.get('bcNo')) document.getElementById('certBCNo').textContent = params.get('bcNo');
+        if (params.get('ctcNo')) document.getElementById('certCTCNo').textContent = params.get('ctcNo');
+        if (params.get('date')) document.getElementById('certDate').textContent = params.get('date');
+
+        // Adjust layout for Indigency Certificate: change title and hide payment/signature
+        // Accept multiple param names and fallbacks (type, certificate_type, certType)
+        const certTypeParam = (params.get('type') || params.get('certificate_type') || params.get('certType') || params.get('cert_type') || '').toLowerCase();
+        let certType = certTypeParam || '';
+        const certNoParam = (params.get('certNo') || '').toUpperCase();
+        // If no explicit type, treat control numbers starting with IND- as Indigency
+        if (!certType && certNoParam.startsWith('IND-')) certType = 'indigency';
+        // Also consider purpose containing the word 'indigency'
+        if (!certType && (params.get('purpose') || '').toLowerCase().includes('indigency')) certType = 'indigency';
+
+        if (certType.includes('indigency')) {
+            // change title
+            const titleEl = document.querySelector('.title h1');
+            if (titleEl) titleEl.textContent = 'CERTIFICATE OF INDIGENCY';
+            // keep the Punong Barangay signature on the RIGHT and remove the applicant signature
+            const sigSection = document.querySelector('.signature-section');
+            const pay = document.querySelector('.payment-details');
+            if (sigSection) {
+                const left = sigSection.querySelector('.signature-left');
+                const right = sigSection.querySelector('.signature-right');
+                if (left) left.style.display = 'none';
+                if (right) {
+                    right.style.display = '';
+                    right.style.width = '45%';
+                    right.style.textAlign = 'right';
+                }
+                // align remaining signature block to the right edge
+                sigSection.style.justifyContent = 'flex-end';
+            }
+            if (pay) pay.style.display = 'none';
+            // also hide validity note if payment-specific
+            const validity = document.querySelector('.validity-note');
+            if (validity) validity.style.display = 'none';
+            // Replace body paragraphs with Indigency-specific wording
+            const residentName = params.get('resident') || '';
+            const civilVal = params.get('civil') || '';
+            const addressVal = params.get('address') || '';
+            const purposeVal = params.get('purpose') || '';
+            const bodyEl = document.querySelector('.body-text');
+            const purposeEls = document.querySelectorAll('.purpose');
+            const issuanceEl = document.querySelector('.issuance');
+            if (bodyEl) {
+                bodyEl.innerHTML = `THIS IS TO CERTIFY that <strong>${residentName}</strong>, legal age, ${civilVal || '[Civil Status]'}, Filipino, is a bona fide resident of ${addressVal || '[Street Address]'}, Central Barangay, Dipolog City.`;
+            }
+            if (purposeEls && purposeEls.length >= 2) {
+                purposeEls[0].textContent = 'This certification is issued to certify that the above-mentioned individual belongs to a low-income family and is classified as an indigent resident of this Barangay.';
+                purposeEls[1].textContent = `This certification is issued to ${purposeVal || '[State Purpose]'}.`;
+            } else if (purposeEls && purposeEls.length === 1) {
+                purposeEls[0].textContent = 'This certification is issued to certify that the above-mentioned individual belongs to a low-income family and is classified as an indigent resident of this Barangay.';
+                // create a new paragraph for the state purpose
+                const p = document.createElement('p'); p.className = 'purpose'; p.textContent = `This certification is issued to ${purposeVal || '[State Purpose]'}.`; if (issuanceEl && issuanceEl.parentNode) issuanceEl.parentNode.insertBefore(p, issuanceEl);
+            }
+        }
+
+        // Print on load if requested
+        if (params.get('print') === 'true') {
+            window.addEventListener('load', () => {
+                setTimeout(() => window.print(), 500);
+            });
+        }
+
+        // Print functionality (Ctrl+P)
+        document.addEventListener('keydown', function (e) {
+            if (e.ctrlKey && e.key === 'p') {
+                e.preventDefault();
+                window.print();
+            }
+        });
+    </script>
+</body>
+
+</html>

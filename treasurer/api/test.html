@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Test - Resident Search</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f5f5f5; }
+        .container { max-width: 600px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; }
+        input { width: 100%; padding: 10px; margin: 10px 0; font-size: 14px; }
+        button { background: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+        pre { background: #f5f5f5; padding: 15px; border-radius: 4px; overflow-x: auto; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>API Test - Resident Search</h2>
+        
+        <input type="text" id="searchInput" placeholder="Enter resident name (e.g., Tangcay, John, etc.)" />
+        <button onclick="testSearch()">Test Search API</button>
+        
+        <h3>Response:</h3>
+        <pre id="response">No test run yet</pre>
+    </div>
+
+    <script>
+        async function testSearch() {
+            const query = document.getElementById('searchInput').value.trim();
+            if (!query) {
+                document.getElementById('response').textContent = 'Please enter a search query';
+                return;
+            }
+
+            try {
+                document.getElementById('response').textContent = 'Loading...';
+                
+                const url = `api/search_residents.php?q=${encodeURIComponent(query)}`;
+                console.log('Testing API endpoint:', url);
+                
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                console.log('Response status:', response.status);
+                console.log('Response data:', data);
+                
+                if (response.ok) {
+                    document.getElementById('response').innerHTML = `<span class="success">✓ Success</span>\n\n${JSON.stringify(data, null, 2)}`;
+                } else {
+                    document.getElementById('response').innerHTML = `<span class="error">✗ HTTP ${response.status}</span>\n\n${JSON.stringify(data, null, 2)}`;
+                }
+            } catch (e) {
+                console.error('Error:', e);
+                document.getElementById('response').innerHTML = `<span class="error">✗ Error: ${e.message}</span>`;
+            }
+        }
+
+        // Test on load
+        window.addEventListener('load', () => {
+            console.log('Page loaded. You can now test the search API.');
+            console.log('Current URL:', window.location.href);
+        });
+    </script>
+</body>
+</html>
