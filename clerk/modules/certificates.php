@@ -193,13 +193,14 @@
       <div class="form-group"><label class="form-label">Resident</label><input class="form-input" id="rResident" placeholder="Resident name" style="background:none;border-color:black;" readonly></div>
       <div class="form-row">
         <div class="form-group"><label class="form-label">Control No. <span style="color:#ef4444;">*</span></label><input class="form-input" id="rNo" placeholder="Control No." style="background:none;border-color:black;"></div>
+        <div class="form-group"><label class="form-label">Barangay Certificate No. <span style="color:red;">*</span></label><input class="form-input" id="rBCNo" placeholder="Barangay Certificate No." required style="background:none;border-color:black;"></div>
+      </div>
+      <div class="form-row">
         <div class="form-group"><label class="form-label">O.R. No.</label><input class="form-input" id="rORNo" placeholder="O.R. Number" readonly></div>
-      </div>
-      <div class="form-row">
         <div class="form-group"><label class="form-label">Date <span style="color:#ef4444;">*</span></label><input class="form-input" id="rDate" type="date" onchange="updateResidencyDate()" style="background:none;border-color:black;"></div>
-        <div class="form-group"><label class="form-label">Type</label><input class="form-input" id="rType" value="Residency Certificate" readonly></div>
       </div>
       <div class="form-row">
+        <div class="form-group"><label class="form-label">Type</label><input class="form-input" id="rType" value="Residency Certificate" readonly></div>
         <div class="form-group"><label class="form-label">Amount Paid (₱)</label><input class="form-input" id="rFee" type="number" readonly></div>
       </div>
       <div class="form-row">
@@ -211,8 +212,8 @@
       <div class="form-group"><label class="form-label">Preview</label>
         <div id="rPreview" class="c-preview">
           <p>THIS IS TO CERTIFY that <input class="c-preview-input" id="rPreviewName" placeholder="Applicant's Full Name" style="font-weight:bold;text-transform:uppercase;border-color:black;">, legal age, <input class="c-preview-input" id="rPreviewCivilStatus" placeholder="Civil Status" style="border-color:black;width:90px;">, Filipino, is a bona fide resident of <input class="c-preview-input" id="rPreviewAddress" placeholder="Street Address" style="border-color:black;">, Central Barangay, Dipolog City.</p>
-          <p id="rPreviewResidencyPara">Based on the records of this office, he/she is a permanent inhabitant and has been continuously residing in this Barangay.</p>
-          <p>This certification is issued to <input class="c-preview-input" id="rPreviewSupport" placeholder="" style="border-color:black;">.</p>
+          <p id="rPreviewResidencyPara">This certification is issued upon the request of the above-named individual as proof of residency.</p>
+          <p>This certification is further issued to <input class="c-preview-input" id="rPreviewSupport" placeholder="" style="border-color:black;">.</p>
           <p>Issued this <span id="rPreviewIssuedDay">__</span> day of <span id="rPreviewIssuedMonthYear">________</span> at Central Barangay Hall, Dipolog City.</p>
         </div>
       </div>
@@ -256,9 +257,8 @@
       <hr>
       <div class="form-group"><label class="form-label">Preview</label>
         <div id="indPreview" class="c-preview" style="padding:18px;line-height:1.8;">
-          <p style="margin:10px 0;">THIS IS TO CERTIFY that <span id="indPreviewName" style="font-weight:700;text-transform:uppercase;">[Applicant's Full Name]</span>, legal age, <span id="indPreviewCivil">[Civil Status]</span>, Filipino, is a bona fide resident of <span id="indPreviewAddress">[Street Address]</span>, Central Barangay, Dipolog City.</p>
-          <p style="margin:10px 0;">This certification is issued to certify that the above-mentioned individual belongs to a low-income family and is classified as an indigent resident of this Barangay.</p>
-          <p style="margin:10px 0;">This certification is issued to <span id="indPreviewPurpose">[State Purpose]</span>.</p>
+          <p style="margin:10px 0;">THIS IS TO CERTIFY that <span id="indPreviewName" style="font-weight:700;text-transform:uppercase;">[Applicant's Full Name]</span>, legal age, <span id="indPreviewCivil">[Civil Status]</span>, Filipino, is a bona fide resident of <span id="indPreviewAddress">[Street Address]</span>, Central Barangay, Dipolog City, and an <strong>INDIGENT CITIZEN</strong>.</p>
+          <p style="margin:10px 0;">This certification is hereby issued to <span id="indPreviewPurpose" style="font-weight:bold;">[State Purpose]</span>.</p>
           <p style="margin:10px 0;">Issued this <span id="indPreviewDay">__</span> day of <span id="indPreviewMonthYear">________</span> at Central Barangay Hall, Dipolog City.</p>
         </div>
       </div>

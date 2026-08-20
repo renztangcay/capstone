@@ -366,6 +366,7 @@
             <div class="signature-left" id="signatureLeft">
                 <div class="signature-line"></div>
                 <p class="signature-label">Signature of Applicant</p>
+                <p id="validityNoteLeft" style="display:none;font-size:11px;font-style:italic;margin-top:8px;text-align:center;">NOT VALID WITHOUT SEAL</p>
             </div>
 
             <div class="signature-right">
@@ -437,20 +438,95 @@
             // Certificate of Indigency
             if (titleEl)    titleEl.textContent   = 'CERTIFICATE OF INDIGENCY';
             document.title = 'Certificate of Indigency';
-            if (para1El)    para1El.textContent   = 'This is to certify further that the said individual belongs to an indigent family and is a recipient of the government\'s social services programs.';
-            // Hide photo, payment details, signature of applicant, and validity note
+            if (para1El)    para1El.textContent   = '';
+            // Hide photo, payment details, and footer validity note
             if (photoEl)    photoEl.style.display   = 'none';
             if (paymentEl)  paymentEl.style.display  = 'none';
-            if (sigLeftEl)  sigLeftEl.style.visibility = 'hidden';
             if (validityEl) validityEl.style.display = 'none';
+            // Show NOT VALID WITHOUT SEAL below Signature of Applicant
+            const validityNoteLeft = document.getElementById('validityNoteLeft');
+            if (validityNoteLeft) validityNoteLeft.style.display = 'block';
+
+            // Change purpose sentence prefix for Certificate of Indigency
+            const purposePara = document.querySelector('.purpose:not(#certPurposePara1)');
+            if (purposePara) {
+                purposePara.innerHTML = purposePara.innerHTML.replace('This certificate is issued to', 'This certification is hereby issued to');
+            }
+
+            // Replace "Dipolog City." with "Dipolog City, and an INDIGENT CITIZEN." in the body paragraph
+            const certBodyPara = document.getElementById('certBodyPara');
+            if (certBodyPara) {
+                certBodyPara.innerHTML = certBodyPara.innerHTML.replace(
+                    /Dipolog City\./,
+                    'Dipolog City, and an <strong>INDIGENT CITIZEN</strong>.'
+                );
+            }
+
+            // Underline the issuance sentence with a solid continuous line
+            const issuanceEl = document.querySelector('.issuance');
+            if (issuanceEl) {
+                issuanceEl.style.textDecoration = 'underline';
+                issuanceEl.style.textDecorationSkipInk = 'none';
+            }
+            // Ensure signature section stays properly separated on left and right for Certificate of Indigency
+            if (sigLeftEl) {
+                sigLeftEl.style.position = 'static';
+                sigLeftEl.style.transform = 'none';
+            }
+            const sigSecInd = document.querySelector('.signature-section');
+            if (sigSecInd) {
+                sigSecInd.style.position = 'static';
+                sigSecInd.style.marginTop = '140px';
+            }
+            const sigRightInd = document.querySelector('.signature-right');
+            if (sigRightInd) sigRightInd.style.transform = 'translateY(-70px)';
+
+            // Increase content font size for Certificate of Indigency
+            document.querySelectorAll('.body-text, .purpose, .issuance, .salutation').forEach(el => {
+                el.style.fontSize = '19px';
+            });
         } else if (certTypeLower.includes('residency')) {
             // Certificate of Residency
             if (titleEl)  titleEl.textContent  = 'CERTIFICATE OF RESIDENCY';
             document.title = 'Certificate of Residency';
-            if (para1El)  para1El.textContent  = 'This certification is issued to attest that the above-named person is a bona fide resident of this Barangay.';
-            // Hide BC No. row — not applicable for Residency certificates
+            if (para1El)  para1El.textContent  = 'This certification is issued upon the request of the above-named individual as proof of residency.';
+            // Hide 2x2 photo box for Certificate of Residency
+            if (photoEl)  photoEl.style.display = 'none';
+            // Change purpose sentence prefix for Certificate of Residency
+            const purposeParaRes = document.querySelector('.purpose:not(#certPurposePara1)');
+            if (purposeParaRes) {
+                purposeParaRes.innerHTML = purposeParaRes.innerHTML.replace('This certificate is issued to', 'This certification is further issued to');
+            }
+            // Show BC No. row for Residency certificates
             const bcNoRow = document.getElementById('certBCNoRow');
-            if (bcNoRow) bcNoRow.style.display = 'none';
+            if (bcNoRow) bcNoRow.style.display = 'block';
+
+            // Underline the issuance sentence with a solid continuous line
+            const issuanceElRes = document.querySelector('.issuance');
+            if (issuanceElRes) {
+                issuanceElRes.style.textDecoration = 'underline';
+                issuanceElRes.style.textDecorationSkipInk = 'none';
+            }
+
+            // Increase content font size to 17px for Certificate of Residency only and adjust signature top margin
+            document.querySelectorAll('.body-text, .purpose, .issuance, .salutation').forEach(el => {
+                el.style.fontSize = '18px';
+            });
+            // Lock signature section at fixed bottom position for Certificate of Residency so left and right stay separated
+            const sigSecRes = document.querySelector('.signature-section');
+            if (sigSecRes) {
+                sigSecRes.style.position = 'absolute';
+                sigSecRes.style.bottom = '2.7in';
+                sigSecRes.style.left = '1in';
+                sigSecRes.style.right = '1in';
+                sigSecRes.style.marginTop = '0';
+            }
+            if (sigLeftEl) {
+                sigLeftEl.style.position = 'static';
+                sigLeftEl.style.transform = 'none';
+            }
+            const sigRightRes = document.querySelector('.signature-right');
+            if (sigRightRes) sigRightRes.style.transform = 'translateY(-40px)';
         } else if (certTypeLower.includes('business')) {
             // Business Clearance
             if (titleEl)  titleEl.textContent  = 'BARANGAY BUSINESS CLEARANCE';
@@ -461,6 +537,23 @@
             if (titleEl)  titleEl.textContent  = 'BARANGAY CLEARANCE';
             document.title = 'Barangay Clearance Certificate';
             if (para1El)  para1El.textContent  = 'This clearance is issued to certify that the above-mentioned individual has no derogatory or criminal record filed in this Barangay.';
+            // Set content font size to 17px for Barangay Clearance only and adjust top margin of signature section
+            document.querySelectorAll('.body-text, .purpose, .issuance, .salutation').forEach(el => {
+                el.style.fontSize = '18px';
+            });
+            // Lock signature section at fixed bottom position above footer so both sides stay locked and separated
+            const sigSec = document.querySelector('.signature-section');
+            if (sigSec) {
+                sigSec.style.position = 'absolute';
+                sigSec.style.bottom = '3.1in';
+                sigSec.style.left = '1in';
+                sigSec.style.right = '1in';
+                sigSec.style.marginTop = '0';
+            }
+            if (sigLeftEl) {
+                sigLeftEl.style.position = 'static';
+                sigLeftEl.style.transform = 'none';
+            }
         }
         // --- End dynamic type ---
         // Set resident name (bold) and extra/civil (non-bold) separately
@@ -483,7 +576,7 @@
             const el = document.getElementById('certGender'); if (el) el.textContent = params.get('gender');
         }
         // Purpose should reflect the preview 'This clearance is issued to (input)'
-        if (params.get('purpose')) document.getElementById('certPurpose').textContent = params.get('purpose');
+        if (params.get('purpose')) document.getElementById('certPurpose').innerHTML = params.get('purpose');
         // Issued day: prefer numeric day and render ordinal with <sup>, accept HTML if provided
         function ordinalSuffix(n) {
             const s = ["th","st","nd","rd"], v = n%100;
@@ -500,7 +593,11 @@
                     const n = parseInt(String(rawDay).replace(/[^0-9]/g, ''), 10);
                     if (!isNaN(n)) {
                         const suf = ordinalSuffix(n);
-                        elDay.innerHTML = `${n}<sup>${suf}</sup>`;
+                        if (certTypeLower.includes('indigency')) {
+                            elDay.textContent = `${n}${suf}`;
+                        } else {
+                            elDay.innerHTML = `${n}<sup>${suf}</sup>`;
+                        }
                     } else {
                         elDay.textContent = rawDay;
                     }

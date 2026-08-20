@@ -1453,7 +1453,7 @@ function updateIndigencyPreview() {
   document.getElementById('indPreviewName').textContent = n;
   document.getElementById('indPreviewCivil').textContent = c;
   document.getElementById('indPreviewAddress').textContent = a;
-  document.getElementById('indPreviewPurpose').textContent = p;
+  document.getElementById('indPreviewPurpose').innerHTML = p;
   // optional: show control number in preview if element exists
   const ctrlEl = document.getElementById('indPreviewControl');
   if (ctrlEl) ctrlEl.textContent = ctrl;
@@ -1936,6 +1936,7 @@ async function printResidencyCertificate() {
   if (!_rChk('rPreviewCivilStatus')) rMissing.push('Civil Status');
   if (!_rChk('rPreviewAddress')) rMissing.push('Street Address');
   if (!_rChk('rPreviewSupport')) rMissing.push('Purpose');
+  if (!_rChk('rBCNo')) rMissing.push('Barangay Certificate No.');
   if (rMissing.length > 0) {
     const msg = 'Please fill in required fields: ' + rMissing.join(', ') + '.';
     if (typeof showToast === 'function') showToast(msg, 'error'); else alert(msg);
@@ -1947,6 +1948,7 @@ async function printResidencyCertificate() {
   } catch (e) { }
 
   const certNo = document.getElementById('rNo')?.value || '';
+  const rBcNo = document.getElementById('rBCNo')?.value?.trim() || '';
 
   // Check for duplicate control number (allow if not in same year and same certificate type)
   try {
@@ -1966,6 +1968,24 @@ async function printResidencyCertificate() {
           const msg = 'The Control Number already exists in the current year for this certificate type. Please use a different one.';
           if (typeof showToast === 'function') showToast(msg, 'error'); else alert(msg);
           return;
+        }
+      }
+
+      // Block print if Barangay Certificate No. is duplicate in current year
+      if (rBcNo) {
+        const dupCheckBc = await window.supabaseClient.select('certificates', `select=id,issued_date,date_created&bc_number=eq.${encodeURIComponent(rBcNo)}`);
+        if (dupCheckBc && dupCheckBc.length > 0) {
+          const dateInput = document.getElementById('rDate')?.value || '';
+          const currentYear = getYearFromDate(dateInput);
+          const isDupBc = dupCheckBc.some(c => {
+            if (String(c.id) === String(window.currentCertId)) return false;
+            return getYearFromDate(c.issued_date || c.date_created) === currentYear;
+          });
+          if (isDupBc) {
+            const msg = 'The Barangay Certificate No. (BC No.) already exists in the current year. Please use a different one.';
+            if (typeof showToast === 'function') showToast(msg, 'error'); else alert(msg);
+            return;
+          }
         }
       }
     }
@@ -2021,6 +2041,7 @@ async function issueResidencyCertificate() {
   if (!_rChk('rPreviewCivilStatus')) rMissing.push('Civil Status');
   if (!_rChk('rPreviewAddress')) rMissing.push('Street Address');
   if (!_rChk('rPreviewSupport')) rMissing.push('Purpose');
+  if (!_rChk('rBCNo')) rMissing.push('Barangay Certificate No.');
   if (rMissing.length > 0) {
     const msg = 'Please fill in required fields: ' + rMissing.join(', ') + '.';
     if (typeof showToast === 'function') showToast(msg, 'error'); else alert(msg);
@@ -2055,7 +2076,22 @@ async function issueResidencyCertificate() {
     }
 
     const orNoVal = document.getElementById('rORNo')?.value || '';
-    const bcNoVal = document.getElementById('rBCNo')?.value || '';
+    const bcNoVal = document.getElementById('rBCNo')?.value?.trim() || '';
+
+    // Block issue if Barangay Certificate No. is duplicate in current year
+    if (bcNoVal) {
+      const dupCheckBc = await window.supabaseClient.select('certificates', `select=id,issued_date,date_created&bc_number=eq.${encodeURIComponent(bcNoVal)}`);
+      if (dupCheckBc && dupCheckBc.length > 0) {
+        const currentYear = getYearFromDate(date);
+        const isDupBc = dupCheckBc.some(c => {
+          if (String(c.id) === String(window.currentCertId)) return false;
+          return getYearFromDate(c.issued_date || c.date_created) === currentYear;
+        });
+        if (isDupBc) {
+          throw new Error('The Barangay Certificate No. (BC No.) already exists in the current year. Please use a different one.');
+        }
+      }
+    }
     const amountPaidVal = document.getElementById('rAmount')?.value || document.getElementById('rFee')?.value || '';
     const ctcNoVal = document.getElementById('rCTCNo')?.value || '';
     const ctcAmtVal = document.getElementById('rCTCAmount')?.value || '';

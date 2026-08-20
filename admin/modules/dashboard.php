@@ -128,7 +128,7 @@
     <div class="stat-icon">🏅</div>
     <div class="stat-label">Senior Citizens</div>
     <div class="stat-value" id="dash-seniors-count">0</div>
-    <div class="stat-delta">65 years and above</div>
+    <div class="stat-delta">60 years and above</div>
   </div>
   <div class="stat-card" style="--accent:var(--amber)">
     <div class="stat-icon">♿</div>
